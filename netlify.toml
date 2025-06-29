@@ -1,0 +1,16 @@
+# netlify.toml
+
+[build]
+  # disable CI→errors so CRA only warns, not fails
+  command = "CI=false npm run build"
+  publish = "build"
+
+[build.environment]
+  # inject your token at build-time
+  REACT_APP_MAPBOX_TOKEN = "pk.eyJ1Ijoi…G1Auw5ldOfsZpZnUI0Ajsw"
+
+# support React-Router client-side routing
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
