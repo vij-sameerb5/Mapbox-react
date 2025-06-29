@@ -1,0 +1,99 @@
+/* Full-screen map */
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Spin button */
+#btn-spin {
+  font: bold 12px/20px 'Helvetica Neue', Arial, sans-serif;
+  background-color: #3386c0;
+  color: #000000;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  border: none;
+  width: 200px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 3px;
+}
+#btn-spin:hover {
+  background-color: #4ea0da;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Controls panel */
+.controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.controls label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.controls select {
+  margin-left: 8px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+.controls button {
+  padding: 8px 16px;
+  background: #3386c0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.controls button:hover {
+  background: #4ea0da;
+}
+
+/* Styled popup container with glassmorphism effect */
+.quake-popup .mapboxgl-popup-content {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.2)
+  );
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.85rem;
+  color: #333;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove the default popup tip */
+.quake-popup .mapboxgl-popup-tip {
+  background: transparent;
+}
