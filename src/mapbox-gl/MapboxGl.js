@@ -23,6 +23,8 @@ export default function MapboxGl() {
   const spinRef = useRef(true);
   const [projection, setProjection] = useState('globe');
 
+  // we deliberately only run this once on mount, not on every projection change
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
