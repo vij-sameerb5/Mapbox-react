@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -102,7 +101,24 @@ export default function MapboxGl() {
         }
       });
     } else {
-      map.getSource('quake-points').setData(data);
+      const quakeSource = map.getSource('quake-points');
+      if (quakeSource) {
+        quakeSource.setData(data);
+      } else {
+        map.addSource('quake-points', { type: 'geojson', data });
+        if (!map.getLayer('quake-points')) {
+          map.addLayer({
+            id: 'quake-points',
+            type: 'circle',
+            source: 'quake-points',
+            paint: {
+              'circle-color': '#E55E5E',
+              'circle-opacity': 0.8,
+              'circle-radius': ['interpolate', ['linear'], ['get', 'mag'], 5, 6, 8, 12, 10, 20]
+            }
+          });
+        }
+      }
     }
 
     // Actual task given -> "risk areas" where any two quakes are <=20km apart but i dont know why this is not working
@@ -131,7 +147,7 @@ export default function MapboxGl() {
       zoneData = { type: 'FeatureCollection', features: riskCircles };
     }
 
-    // Update or adding the risk-area layer somewhere fked -> cant figure out this logic/
+    // Update or adding the risk-area layer
     if (initial) {
       map.addSource('risk-area', { type: 'geojson', data: zoneData });
       map.addLayer({
@@ -145,7 +161,24 @@ export default function MapboxGl() {
         before: 'quake-points'
       });
     } else {
-      map.getSource('risk-area').setData(zoneData);
+      const riskSource = map.getSource('risk-area');
+      if (riskSource) {
+        riskSource.setData(zoneData);
+      } else {
+        map.addSource('risk-area', { type: 'geojson', data: zoneData });
+        if (!map.getLayer('risk-area-fill')) {
+          map.addLayer({
+            id: 'risk-area-fill',
+            type: 'fill',
+            source: 'risk-area',
+            paint: {
+              'fill-color': 'rgba(255,255,0,0.3)',
+              'fill-outline-color': 'rgba(255,255,0,0.6)'
+            },
+            before: 'quake-points'
+          });
+        }
+      }
     }
 
     lastQuakesRef.current = data;
